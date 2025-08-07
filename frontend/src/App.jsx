@@ -1,10 +1,21 @@
-import React from 'react'
+import { BrowserRouter } from "react-router-dom"
+import { AuthProvider } from "./context/AuthContext"
+import { NotificationProvider } from "./context/NotificationContext"
+import AppRouter from "./router"
+import "./index.css"
 
-export default function App() {
+function App() {
   return (
-    <div>
-       <h1 className="text-4xl font-bold text-red-500">Tailwind fonctionne ✅</h1>
-      <p className="mt-4 text-gray-600">Bienvenue dans ton projet React + Tailwind</p>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <NotificationProvider>
+          <div className="min-h-screen bg-gray-50">
+            <AppRouter />
+          </div>
+        </NotificationProvider>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
+
+export default App
