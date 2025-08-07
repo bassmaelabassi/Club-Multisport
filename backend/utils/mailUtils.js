@@ -1,11 +1,9 @@
-const transporter = require('../config/mail');
+const sendWelcomeEmail = async (email, name) => {
 
-exports.sendMail = async (to, subject, text) => {
-  const mailOptions = {
-    from: process.env.MAIL_USER,
-    to,
-    subject,
-    text,
-  };
-  return transporter.sendMail(mailOptions);
+  console.log(`Welcome email would be sent to ${email} for user ${name}`);
+  return true;
+};
+
+module.exports = {
+  sendWelcomeEmail
 };

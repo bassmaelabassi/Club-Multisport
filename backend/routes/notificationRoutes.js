@@ -1,9 +1,27 @@
-// notificationRoutes.js
 const express = require('express');
 const router = express.Router();
-const notificationController = require('../controllers/notificationController');
+const { 
+  getUserNotifications, 
+  markAsRead, 
+  markAllAsRead, 
+  deleteNotification,
+  getNotificationsByUserId
+} = require('../controllers/notificationController');
+const { protect } = require('../middlewares/authMiddleware');
 
-router.get('/', notificationController.getNotifications);
-router.post('/', notificationController.createNotification);
+router.route('/')
+  .get(protect, getUserNotifications);
 
-module.exports = router; 
+router.route('/read-all')
+  .put(protect, markAllAsRead);
+
+router.route('/:id/read')
+  .put(protect, markAsRead);
+
+router.route('/:id')
+  .delete(protect, deleteNotification);
+
+router.route('/:userId')
+  .get(protect, getNotificationsByUserId);
+
+module.exports = router;
