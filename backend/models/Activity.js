@@ -5,7 +5,7 @@ const ActivitySchema = new mongoose.Schema({
   category: { 
     type: String, 
     required: true,
-    enum: ['danse', 'musique', 'natation', 'équitation', 'fitness', 'autre'] 
+    enum: ['danse', 'musique', 'natation', 'équitation', 'fitness', 'yoga', 'autre'] 
   },
   description: { type: String, required: true },
   coach: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -21,6 +21,8 @@ const ActivitySchema = new mongoose.Schema({
   duration: { type: Number, required: true },
   location: { type: String, required: true },
   image: { type: String },
+  rating: { type: Number, default: 0 },
+  reviewsCount: { type: Number, default: 0 },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
 });

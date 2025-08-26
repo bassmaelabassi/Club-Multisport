@@ -7,7 +7,7 @@ const NotificationSchema = new mongoose.Schema({
   isRead: { type: Boolean, default: false },
   type: { 
     type: String, 
-    enum: ['reservation', 'system', 'promotion'], 
+    enum: ['reservation', 'system', 'promotion', 'contact', 'review', 'new_reservation'], 
     required: true 
   },
   relatedEntity: {

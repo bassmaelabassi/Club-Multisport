@@ -70,8 +70,12 @@ const updateCoachProfile = async (req, res, next) => {
 
 const getCoachActivities = async (req, res, next) => {
   try {
-    const coach = await Coach.findById(req.params.id);
+    let coach = await Coach.findById(req.params.id);
     
+    if (!coach) {
+      coach = await Coach.findOne({ user: req.params.id });
+    }
+
     if (!coach) {
       return res.status(404).json({ message: 'Coach not found' });
     }

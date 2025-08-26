@@ -6,18 +6,22 @@ const {
   createActivity, 
   updateActivity, 
   deleteActivity,
-  getActivitiesByCoach
+  getActivitiesByCoach,
+  getAvailableSlots
 } = require('../controllers/activityController');
 const { protect, admin, coachOrAdmin } = require('../middlewares/authMiddleware');
 
 router.route('/')
   .get(getActivities)
-  .post(protect, admin, createActivity);
+  .post(protect, coachOrAdmin, createActivity);
 
 router.route('/:id')
   .get(getActivityById)
-  .put(protect, admin, updateActivity)
-  .delete(protect, admin, deleteActivity);
+  .put(protect, coachOrAdmin, updateActivity)
+  .delete(protect, coachOrAdmin, deleteActivity);
+
+router.route('/:id/available-slots')
+  .get(getAvailableSlots);
 
 router.route('/coach/:coachId')
   .get(protect, coachOrAdmin, getActivitiesByCoach);

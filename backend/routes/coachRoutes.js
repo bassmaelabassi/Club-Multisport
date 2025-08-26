@@ -7,10 +7,12 @@ const {
   getCoachActivities,
   addCoachReview
 } = require('../controllers/coachController');
-const { protect, coachOrAdmin } = require('../middlewares/authMiddleware');
+const { createCoach } = require('../controllers/userController');
+const { protect, coachOrAdmin, admin } = require('../middlewares/authMiddleware');
 
 router.route('/')
-  .get(getCoaches);
+  .get(getCoaches)
+  .post(protect, admin, createCoach);
 
 router.route('/:id')
   .get(getCoachById)
@@ -18,6 +20,12 @@ router.route('/:id')
 
 router.route('/:id/activities')
   .get(getCoachActivities);
+
+router.route('/me/activities')
+  .get(protect, (req, res, next) => {
+    req.params.id = req.user._id.toString();
+    return getCoachActivities(req, res, next);
+  });
 
 router.route('/:id/reviews')
   .post(protect, addCoachReview);

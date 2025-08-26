@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const { getStats, getUserStats } = require('../controllers/statsController');
+const { protect, admin } = require('../middlewares/authMiddleware');
 
-router.get('/', (req, res) => {
-    res.json({ message: 'Stats route working' });
-});
+router.route('/')
+  .get(protect, admin, getStats);
+
+router.route('/user')
+  .get(protect, getUserStats);
 
 module.exports = router;

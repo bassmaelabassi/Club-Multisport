@@ -3,7 +3,6 @@ const User = require('../models/User');
 const Notification = require('../models/Notification');
 const { contactValidationSchema } = require('../utils/validate');
 const { sendContactNotificationToAdmin, sendContactNotificationToCoach } = require('../utils/mailUtils');
-const { sendContactResponseSMS } = require('../utils/smsUtils');
 
 const createContact = async (req, res) => {
   try {
@@ -194,23 +193,7 @@ const replyToContact = async (req, res) => {
       return res.status(404).json({ message: 'Message non trouvé' });
     }
 
-    if (contact.userId) {
-      try {
-        const user = await User.findById(contact.userId);
-        if (user && user.phone) {
-          const adminUser = await User.findById(req.user._id);
-          await sendContactResponseSMS(
-            user.phone,
-            user.firstName,
-            `${adminUser.firstName} ${adminUser.lastName}`,
-            contact.subject
-          );
-          console.log(`SMS de réponse envoyé à ${user.phone}`);
-        }
-      } catch (smsError) {
-        console.error('Erreur lors de l\'envoi du SMS de réponse:', smsError);
-      }
-    }
+    // SMS supprimés: plus d'envoi de SMS pour les réponses de contact
     try {
       if (contact.userId) {
         await Notification.create({
