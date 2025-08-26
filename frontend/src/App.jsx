@@ -9,9 +9,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <NotificationProvider>
-          <div className="min-h-screen bg-gray-50">
-            <AppRouter />
-          </div>
+          <AppRouter />
         </NotificationProvider>
       </AuthProvider>
     </BrowserRouter>
